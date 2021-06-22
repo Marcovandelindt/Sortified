@@ -67,4 +67,35 @@ class FitbitController extends Controller
 
         return redirect()->route('food.drinks');
     }
+
+    /**
+     * Update walking data
+     *
+     */
+    public function updateWalkingData()
+    {
+        $this->fitbitService->getLifetimeSteps();
+
+        return redirect()->route('health.statistics');
+    }
+
+    /**
+     * Update food
+     */
+    public function updateFood()
+    {
+        $this->fitbitService->getMeals();
+
+        return redirect()->route('food.drinks');
+    }
+
+    /**
+     * Update water
+     */
+    public function updateWater()
+    {
+        $this->fitbitService->getWaterIntake();
+
+        return redirect()->route('food.drinks');
+    }
 }

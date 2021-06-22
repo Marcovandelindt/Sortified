@@ -66,6 +66,11 @@ Route::group(['middleware' => 'auth'], function () {
     # Fitbit routes
     Route::get('/fitbit', [App\Http\Controllers\Fitbit\FitbitController::class, 'index'])->name('fitbit.index');
     Route::get('/fitbit/request-access-token', [App\Http\Controllers\Fitbit\FitbitRequestAccessTokenController::class, 'request'])->name('fitbit.access_token');
+
+    # Manual actions
+    Route::get('/health/update-walking-data', [App\Http\Controllers\Fitbit\FitbitController::class, 'updateWalkingData'])->name('walking.update');
+    Route::get('/food-and-drinks/update-food', [App\Http\Controllers\Fitbit\FitbitController::class, 'updateFood'])->name('food.update');
+    Route::get('/food-and-drinks/update-water', [App\Http\Controllers\Fitbit\FitbitController::class, 'updateWater'])->name('water.update');
 });
 
 Route::group(['middleware' => 'auth'], function () {
