@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        LaravelFrontendPresets\PaperPreset\PaperPresetServiceProvider::class,
 
         /*
          * Application Service Providers...
