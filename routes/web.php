@@ -62,6 +62,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     # Setting routes
     Route::get('/settings', [App\Http\Controllers\Settings\SettingController::class, 'index'])->name('settings.index');
+
+    # Fitbit routes
+    Route::get('/fitbit', [App\Http\Controllers\Fitbit\FitbitController::class, 'index'])->name('fitbit.index');
+    Route::get('/fitbit/request-access-token', [App\Http\Controllers\Fitbit\FitbitRequestAccessTokenController::class, 'request'])->name('fitbit.access_token');
 });
 
 Route::group(['middleware' => 'auth'], function () {
