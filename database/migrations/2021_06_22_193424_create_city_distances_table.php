@@ -16,6 +16,7 @@ class CreateCityDistancesTable extends Migration
         Schema::create('city_distances', function (Blueprint $table) {
             $table->id();
             $table->string('country_name');
+            $table->string('country_code');
             $table->string('city_name');
             $table->string('distance_km');
             $table->timestamps();
