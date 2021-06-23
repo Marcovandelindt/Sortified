@@ -9,6 +9,7 @@ use App\Models\FoodAndDrinks\FoodLog;
 use App\Models\FoodAndDrinks\DrinkLog;
 use App\Models\FoodAndDrinks\WaterLog;
 use djchen\OAuth2\Client\Provider\Fitbit;
+use App\Models\Health\DailyStep;
 
 class FitbitService
 {
@@ -16,7 +17,9 @@ class FitbitService
 
     const WATER_LOG_ENDPOINT = '/1/user/-/foods/log/water/date/';
     const FOOD_LOG_ENDPOINT  = '/1/user/-/foods/log/date/';
-    const STEPS_ENDPOINT     = '/1/user/-/activities.json';
+    const ACTIVITY_ENDPOINT  = '/1/user/-/activities';
+    const STEPS_ENDPOINT     = '/1/user/-/activities/tracker/steps/date';
+
 
     /**
      * Create new Fitbit Provider
@@ -156,7 +159,7 @@ class FitbitService
      */
     public function getLifetimeSteps()
     {
-        $url = self::STEPS_ENDPOINT;
+        $url = self::ACTIVITY_ENDPOINT . '.json';
 
         $request = $this->generateGetRequest($url);
 
@@ -166,6 +169,31 @@ class FitbitService
             $user->total_distance_walked = $request['lifetime']['total']['distance'];
 
             $user->save();
+        }
+    }
+
+    /**
+     * Get daily steps
+     */
+    public function getDailySteps($date = null)
+    {
+        if (empty($date)) {
+            $date = date('Y-m-d');
+        }
+
+        $url = self::ACTIVITY_ENDPOINT . '/date/' . $date . '.json';
+
+        $request = $this->generateGetRequest($url);
+
+        if (!empty($request)) {
+            if (!DailyStep::where('date', $date)->first()) {
+                $dailyStep          = new DailyStep();
+                $dailyStep->user_id = Auth::user()->id;
+                $dailyStep->steps   = $request['summary']['steps'];
+                $dailyStep->date    = $date;
+
+                $dailyStep->save();
+            }
         }
     }
 }

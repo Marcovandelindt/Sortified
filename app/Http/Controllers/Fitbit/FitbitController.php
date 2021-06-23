@@ -98,4 +98,14 @@ class FitbitController extends Controller
 
         return redirect()->route('food.drinks');
     }
+
+    /**
+     * Update daily steps
+     */
+    public function updateDailySteps()
+    {
+        $this->fitbitService->getDailySteps();
+
+        return redirect()->route('health.index');
+    }
 }
