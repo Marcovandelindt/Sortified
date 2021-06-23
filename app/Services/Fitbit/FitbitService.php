@@ -187,13 +187,16 @@ class FitbitService
 
         if (!empty($request)) {
             if (!DailyStep::where('date', $date)->first()) {
-                $dailyStep          = new DailyStep();
-                $dailyStep->user_id = Auth::user()->id;
-                $dailyStep->steps   = $request['summary']['steps'];
-                $dailyStep->date    = $date;
-
-                $dailyStep->save();
+                $dailyStep = new DailyStep();
+            } else {
+                $dailyStep = DailyStep::where('date', $date)->first();
             }
+
+            $dailyStep->user_id = Auth::user()->id;
+            $dailyStep->steps   = $request['summary']['steps'];
+            $dailyStep->date    = $date;
+
+            $dailyStep->save();
         }
     }
 }

@@ -34,7 +34,9 @@
                                 {{8000 - $dailySteps->steps}}
                             </span> steps behind daily goal
                             @elseif ($dailySteps->steps > 8000)
-
+                                <span style="color: green">
+                                    {{ $dailySteps->steps - 8000 }}
+                                </span> steps ahead of daily goal
                             @endif
                         </div>
                     </div>
