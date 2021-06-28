@@ -27,7 +27,6 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
@@ -66,6 +65,12 @@ Route::group(['middleware' => 'auth'], function () {
     # Fitbit routes
     Route::get('/fitbit', [App\Http\Controllers\Fitbit\FitbitController::class, 'index'])->name('fitbit.index');
     Route::get('/fitbit/request-access-token', [App\Http\Controllers\Fitbit\FitbitRequestAccessTokenController::class, 'request'])->name('fitbit.access_token');
+
+    # Music Routes
+    Route::get('/music/authenticate', [App\Http\Controllers\Music\MusicAuthenticateController::class, 'index'])->name('music.authenticate');
+    Route::get('/music/request-access-token', [App\Http\Controllers\Music\MusicRequestAccessTokenController::class, 'store'])->name('music.request');
+    Route::get('/music/get-recent-tracks', [App\Http\Controllers\Music\MusicGetRecentTracksController::class, 'create'])->name('music.recent');
+    Route::get('/music/reports/weekly', [App\Http\Controllers\Music\MusicWeeklyReportController::class, 'index'])->name('reports.weekly');
 
     # Manual actions
     Route::get('/health/update-walking-data', [App\Http\Controllers\Fitbit\FitbitController::class, 'updateWalkingData'])->name('walking.update');
